@@ -1,6 +1,5 @@
 #!/user/bin/env python
 import os
-os.system("ssh -i /C:/Users/10902/Desktop/XINcan.pem ubuntu@ec2-34-205-141-231.compute-1.amazonaws.com")
 os.system("sudo apt-get update")
 os.system("sudo apt-get install vim")
 os.system("sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password 123456'")
