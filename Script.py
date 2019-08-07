@@ -3,6 +3,8 @@ import os
 os.system("ssh -i /C:/Users/10902/Desktop/XINcan.pem ubuntu@ec2-34-205-141-231.compute-1.amazonaws.com")
 os.system("sudo apt-get update")
 os.system("sudo apt-get install vim")
+os.system("sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password "input_pwd"'")
+os.system("sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password "input_pwd"'")
 os.system("sudo apt -y install apache2 mysql-client mysql-server php libapache2-mod-php")
 os.system("sudo apt -y install graphviz aspell ghostscript clamav php-pspell php-curl php-gd php-intl php-mysql php-xml php-xmlrpc php-ldap php-zip php-soap php-mbstring")
 os.system("sudo service apache2 restart")
