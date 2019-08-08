@@ -17,6 +17,19 @@ os.system("sudo cp -R /opt/moodle /var/www/html/")
 os.system("sudo mkdir /var/moodledata")
 os.system("sudo chown -R www-data /var/moodledata")
 os.system("sudo chmod -R 777 /var/moodledata")
-#modify the mysqld.conf file
 
+#modify the mysqld.conf file
+fp = open('/etc/mysql/mysql.conf.d/mysqld.cnf','r')
+lines = []
+for line in fp:                  #内置的迭代器, 效率很高
+    lines.append(line)
+fp.close()
+
+lines.insert(39, 'default_storage_engine = innodb\ninnodb_file_per_table = 1\ninnodb_file_format = Barracuda\n') #在第 LINE+1 行插入
+s = ''.join(lines)
+fp = open('/etc/mysql/mysql.conf.d/mysqld.cnf', 'w+')
+fp.write(s)
+fp.close()
+del lines[:]
+os.system("sudo service mysql restart")
 
