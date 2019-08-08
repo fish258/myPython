@@ -1,4 +1,5 @@
 #!/user/bin/env python
+#setup the LAMP
 import os
 os.system("sudo apt-get update")
 os.system("sudo sh mysql.sh")
@@ -16,4 +17,6 @@ os.system("sudo cp -R /opt/moodle /var/www/html/")
 os.system("sudo mkdir /var/moodledata")
 os.system("sudo chown -R www-data /var/moodledata")
 os.system("sudo chmod -R 777 /var/moodledata")
+#modify the mysqld.conf file
+
 
