@@ -34,6 +34,7 @@ fp.write(s)
 fp.close()
 del lines[:]
 os.system("sudo service mysql restart")
+os.system("sudo python3 myPython/mysql.py")
 
 
 
