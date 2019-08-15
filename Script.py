@@ -43,8 +43,6 @@ cursor = db.cursor()
 cursor.execute("CREATE DATABASE moodle DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
 cursor.execute("create user 'user1'@'localhost' IDENTIFIED BY '981204';")
 cursor.execute("GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON moodle.* TO user1@localhost IDENTIFIED BY '981204';")
-data = cursor.fetchone()
-print(data)
 db.close()
 
 
