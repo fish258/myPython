@@ -1,10 +1,8 @@
 import os
-os.system("sudo apt-get update")
-os.system("sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password password 123456'")
-os.system("sudo debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password 123456'")
-os.system("sudo apt -y install mysql-server mysql-client")
-os.system("sudo apt -y install apache2 php libapache2-mod-php")
-os.system("sudo apt -y install graphviz aspell ghostscript clamav php-pspell php-curl php-gd php-intl php-mysql php-xml php-xmlrpc php-ldap php-zip php-soap php-mbstring")
-os.system("sudo service apache2 restart")
-os.system("sudo apt -y install git")
-os.system("cd /opt")
+import MySQLdb
+db = MySQLdb.connect("localhost","root","1stgroup","mysql",charset = "utf8")
+sursor = db.cursor()
+cursor.execute("SELECT VERSION()")
+data = cursor.fetchone()
+print(data)
+db.close()
