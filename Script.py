@@ -3,6 +3,7 @@
 import os
 os.system("sudo apt-get update")
 os.system("sudo sh mysql.sh")
+os.system("sudo apt -y install python3-msqldb")
 os.system("sudo apt -y install apache2 php libapache2-mod-php")
 os.system("sudo apt -y install graphviz aspell ghostscript clamav php-pspell php-curl php-gd php-intl php-mysql php-xml php-xmlrpc php-ldap php-zip php-soap php-mbstring")
 os.system("sudo service apache2 restart")
