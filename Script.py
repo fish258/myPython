@@ -46,5 +46,64 @@ cursor.execute("GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES
 db.close()
 
 
+#get the ip
+import socket,struct,fcntl
+def get_ip(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
+ip = get_ip('eth0')
+fp = open('/var/www/html/moodle/config.php','r')
+lines = []
+for line in fp:
+    lines.append(line)
+fp.close()
+
+lines.insert(20, "$CFG->wwwroot   = 'http://%s/moodle';\n"%(ip)) #在第 LINE+1 行插入
+s = ''.join(lines)
+fp = open('/var/www/html/moodle/config.php', 'w+')
+fp.write(s)
+fp.close()
+del lines[:]
+
+import socket,struct,fcntl
+def get_ip(ifname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
+ip = get_ip('eth0')
+f = open('/var/www/html/moodle/cc.php','w')
+f.write("<?php  // Moodle configuration file \n"
+         "\n"
+        "unset($CFG);\n"
+        "global $CFG;\n"
+        "$CFG = new stdClass();\n"
+        "\n"
+        "$CFG->dbtype    = 'mysqli';\n"
+        "$CFG->dblibrary = 'native';\n"
+        "$CFG->dbhost    = 'localhost';\n"
+        "$CFG->dbname    = 'mysql';\n"
+        "$CFG->dbuser    = 'user1';\n"
+        "$CFG->dbpass    = '981204';\n"
+        "$CFG->prefix    = 'mdl_';\n"
+        "$CFG->dboptions = array (\n"
+         " 'dbpersist' => 0,\n"
+          "  'dbport' => '',\n"
+           "   'dbsocket' => ''\n,"
+            "    'dbcollation' => 'utf8mb4_unicode_ci',\n"
+             "   );\n"
+              "   \n"
+              "$CFG->wwwroot   = 'http://%s/moodle';\n"
+                "$CFG->dataroot  = '/var/moodledata';\n"
+                "$CFG->admin     = 'admin';\n"
+                "\n"
+                "$CFG->directorypermissions = 0777;\n"
+                 "\n"
+                "require_once(__DIR__ . '/lib/setup.php');\n"
+                 "\n"
+                "// There is no php closing tag in this file,\n"
+                "// it is intentional because it prevents trailing whitespace problems!\n"%(ip))
+f.close()
+
+
+
 
 
