@@ -54,7 +54,9 @@ import socket,struct,fcntl
 def get_ip(ifname):#get ip address
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
-ip = get_ip('eth0')
+ownip = get_ip('eth0')
+p = os.popen("curl ifconfig.me")
+publicIP = p.read()
 f = open('/var/www/html/moodle/config.php','w')
 f.write("<?php  // Moodle configuration file \n"
          "\n"
@@ -85,7 +87,7 @@ f.write("<?php  // Moodle configuration file \n"
                 "require_once(__DIR__ . '/lib/setup.php');\n"
                  "\n"
                 "// There is no php closing tag in this file,\n"
-                "// it is intentional because it prevents trailing whitespace problems!\n"%(ip))
+                "// it is intentional because it prevents trailing whitespace problems!\n"%(publicIP))
 f.close()
 os.system("echo 'done!'")
 
