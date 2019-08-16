@@ -45,28 +45,13 @@ cursor.execute("create user 'user1'@'localhost' IDENTIFIED BY '981204';")
 cursor.execute("GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON moodle.* TO user1@localhost IDENTIFIED BY '981204';")
 db.close()
 
+#create the config.php in moodle
+os.chdir("/var/www/html/moodle")
+os.system("sudo touch config.php")
 
-#get the ip
+#setup the config.php
 import socket,struct,fcntl
-def get_ip(ifname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
-ip = get_ip('eth0')
-fp = open('/var/www/html/moodle/config.php','r')
-lines = []
-for line in fp:
-    lines.append(line)
-fp.close()
-
-lines.insert(20, "$CFG->wwwroot   = 'http://%s/moodle';\n"%(ip)) #在第 LINE+1 行插入
-s = ''.join(lines)
-fp = open('/var/www/html/moodle/config.php', 'w+')
-fp.write(s)
-fp.close()
-del lines[:]
-
-import socket,struct,fcntl
-def get_ip(ifname):
+def get_ip(ifname):#get ip address
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
 ip = get_ip('eth0')
