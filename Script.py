@@ -89,7 +89,7 @@ f.write("<?php  // Moodle configuration file \n"
                 "// There is no php closing tag in this file,\n"
                 "// it is intentional because it prevents trailing whitespace problems!\n"%(publicIP))
 f.close()
-os.system("echo 'done!'")
+os.system("sudo php /var/www/html/moodle/install.php")
 
 
 
