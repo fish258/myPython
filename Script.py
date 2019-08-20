@@ -110,5 +110,6 @@ os.system("sudo touch /etc/rc.local")
 fa = open('/etc/rc.local','w')
 fa.write("#!/bin/bash\npython3 /home/ubuntu/myPython/changeIP.py")
 fa.close()
+os.system("sudo chmod +x /etc/rc.local")
 
 
