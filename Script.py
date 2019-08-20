@@ -106,9 +106,10 @@ file.close()
 del lines[:]
 os.system("sudo ln -s /lib/systemd/system/rc.local.service /etc/systemd/system/rc.local.service")
 os.system("sudo touch /etc/rc.local")
+os.system("sudo chmod +x /etc/rc.local")
 fa = open('/etc/rc.local','w')
 fa.write("#!/bin/bash\npython3 /home/ubuntu/myPython/changeIP.py")
 fa.close()
-os.system("sudo chmod +x /etc/rc.local")
+
 
 
