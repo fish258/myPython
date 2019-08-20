@@ -111,5 +111,11 @@ fa = open('/etc/rc.local','w')
 fa.write("#!/bin/bash\npython3 /home/ubuntu/myPython/changeIP.py")
 fa.close()
 
+#setup ftp
+os.system("sudo apt-get install vsftpd")
+os.system("sudo pwconv")
+os.system("sudo bash pwd.sh")
+
+
 
 
