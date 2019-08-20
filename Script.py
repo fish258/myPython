@@ -90,6 +90,7 @@ f.write("<?php  // Moodle configuration file \n"
                 "// it is intentional because it prevents trailing whitespace problems!\n"%(publicIP))
 f.close()
 os.system("sudo php /var/www/html/moodle/install.php")
+os.system("cd")
 os.system("sudo bash myPython/phpmyadmin.sh")
 
 
