@@ -90,7 +90,9 @@ f.write("<?php  // Moodle configuration file \n"
                 "// it is intentional because it prevents trailing whitespace problems!\n"%(publicIP))
 f.close()
 os.system("sudo php /var/www/html/moodle/install.php")
-
+os.system("sudo su - root -c "echo 'phpmyadmin phpmyadmin/reconfigure-webserver multiselect apache2' | debconf-set-selections"")
+sudo su - root -c "echo 'phpmyadmin phpmyadmin/dbconfig-install boolean false' | debconf-set-selections" 
+sudo apt-get -y install phpmyadmin 
 
 
 
