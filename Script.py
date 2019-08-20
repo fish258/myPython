@@ -90,8 +90,7 @@ f.write("<?php  // Moodle configuration file \n"
 f.close()
 os.system("sudo php /var/www/html/moodle/install.php")
 #setup phpmyadmin
-os.system("cd")
-os.system("sudo bash myPython/phpmyadmin.sh")
+os.system("sudo bash /home/ubuntu/myPython/phpmyadmin.sh")
 
 #change IP
 file = open('/lib/systemd/system/rc.local.service','r')
