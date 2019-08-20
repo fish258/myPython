@@ -45,12 +45,11 @@ cursor.execute("create user 'user1'@'localhost' IDENTIFIED BY '981204';")
 cursor.execute("GRANT SELECT,INSERT,UPDATE,DELETE,CREATE,CREATE TEMPORARY TABLES,DROP,INDEX,ALTER ON moodle.* TO user1@localhost IDENTIFIED BY '981204';")
 db.close()
 
-#create the config.php in moodle
+#create the config.php in moodle  
 os.chdir("/var/www/html/moodle")
 os.system("sudo touch config.php")
-
 #setup the config.php
-import socket,struct,fcntl
+#import socket,struct,fcntl
 # def get_ip(ifname):#get ip address
 #     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 #     return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', bytes(ifname[:15],'utf-8')))[20:24])
@@ -78,7 +77,7 @@ f.write("<?php  // Moodle configuration file \n"
             "    'dbcollation' => 'utf8mb4_unicode_ci',\n"
              "   );\n"
               "   \n"
-              "$CFG->wwwroot   = 'http://%s/moodle';\n"
+                "$CFG->wwwroot   = 'http://%s/moodle';\n"
                 "$CFG->dataroot  = '/var/moodledata';\n"
                 "$CFG->admin     = 'admin';\n"
                 "\n"
@@ -90,9 +89,26 @@ f.write("<?php  // Moodle configuration file \n"
                 "// it is intentional because it prevents trailing whitespace problems!\n"%(publicIP))
 f.close()
 os.system("sudo php /var/www/html/moodle/install.php")
+#setup phpmyadmin
 os.system("cd")
 os.system("sudo bash myPython/phpmyadmin.sh")
 
-
+#change IP
+file = open('/lib/systemd/system/rc.local.service','r')
+lines = []
+for line in file:            
+    lines.append(line)
+file.close()
+lines.insert(14, '[Install]\nWantedBy=multi-user.target\nAlias=rc-local.service')
+s = ''.join(lines)
+file = open('/lib/systemd/system/rc.local.service', 'w+')
+file.write(s)
+file.close()
+del lines[:]
+os.system("sudo ln -s /lib/systemd/system/rc.local.service /etc/systemd/system/rc.local.service")
+os.system("sudo touch /etc/rc.local")
+fa = open('/etc/rc.local','w')
+fa.write("#!/bin/bash\npython3 /home/ubuntu/myPython/changeIP.py")
+fa.close()
 
 
